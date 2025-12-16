@@ -48,4 +48,18 @@ class Controller:
 
     """Implementare la parte di ricerca del cammino minimo"""
     # TODO
+    def handle_cammino_minimo(self, e):
+        if not self._model.G.edges:
+            self._view.show_alert("Cerca prima il grafo")
+            return
+        path, peso_totale = self._model.get_cammino_minimo(float(self._view.txt_soglia.value))
+        self._view.lista_visualizzazione_3.controls.clear()
+
+        if not path:
+            self._view.lista_visualizzazione_3.controls.append(ft.Text('Nessun cammino trovato con almeno 2 archi'))
+        else:
+            self._view.lista_visualizzazione_3.controls.append(ft.Text(f'Cammino minimo peso: {peso_totale}'))
+            for nome, id_n in path:
+                self._view.lista_visualizzazione_3.controls.append(ft.Text(f'{nome} ID: {id_n}'))
+        self._view.update()
 
